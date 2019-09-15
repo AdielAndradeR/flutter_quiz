@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,44 +27,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-    
-      _counter--;
-    });
-  }
+  var _questionIndex = 0;
+
+    void _answerQuestion(){
+      setState(() {
+       _questionIndex = _questionIndex + 1; 
+      });
+      print('Anwer Chosen');
+      print(_questionIndex);
+    }
+
 
   @override
   Widget build(BuildContext context) {
+    var questions =[
+      'What\'s your favorite color?',
+      'What\'s your favorite animal?'
+    ];
    
     return Scaffold(
       appBar: AppBar(
        
         title: Text(widget.title),
       ),
-      body: Center(
+      body: 
        
-        child: Column(
-          
-          mainAxisAlignment: MainAxisAlignment.center,
+         Column(
           children: <Widget>[
-            Text(
-              'Later, I Will change this part for a quiz formart',
+            Question(
+              questions[_questionIndex],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+           
+            
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), 
-    );
+      );
+    
   }
 }
