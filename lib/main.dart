@@ -28,45 +28,51 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final questions = const [{
+      'questionText' : 'What\'s your favorite color?',
+      'answers' : [ 'Blue', 'Red', 'Green', 'Orange']
+    },{
+      'questionText' : 'What\'s your favorite animal?',
+      'answers' : ['Lion', 'Elephant', 'Rabbit']
+    },{
+      'questionText' : 'What\'s your favorite teacher?',
+      'answers' : ['Marcelo', 'Rohit', 'Joseana', 'Hyggo', 'Adalbaerto']
+    }];
+
   var _questionIndex = 0;
 
     void _answerQuestion(){
       setState(() {
        _questionIndex = _questionIndex + 1; 
       });
-      print('Anwer Chosen');
-      print(_questionIndex);
+       if(_questionIndex < questions.length){
+        print('We have more quastions');
+      }else{
+        print('We don\'t have more questions');
+      }
+    
     }
 
 
   @override
   Widget build(BuildContext context) {
-    var questions =[
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?'
-    ];
-   
     return Scaffold(
       appBar: AppBar(
        
         title: Text(widget.title),
       ),
-      body: 
-       
+      body: _questionIndex < questions.length ?       
          Column(
           children: <Widget>[
             Question(
-              questions[_questionIndex],
+              questions[_questionIndex]['questionText'],
             ),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-           
-            
+            ...(questions[_questionIndex]['answers'] as List<String>).map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList()
           ],
-        ),
+        ) : Center(
+          child: Text('You did it!!!'),),
       );
     
   }
